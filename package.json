@@ -1,0 +1,41 @@
+{
+  "name": "@run-z/triage-sigint",
+  "version": "1.0.0",
+  "description": "Triage SIGINT not stopping run-z",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "author": "Ruslan Lopatin <ruslan.lopatin@gmail.com>",
+  "exports": "./dist/server.js",
+  "dependencies": {
+    "@hatsy/hatsy": "^2.5.1",
+    "tslib": "^2.4.0"
+  },
+  "devDependencies": {
+    "@run-z/eslint-config": "^3.2.2",
+    "@run-z/prettier-config": "^2.0.0",
+    "@run-z/project-config": "^0.6.2",
+    "@swc/core": "^1.3.1",
+    "@swc/jest": "^0.2.22",
+    "@types/node": "^16.11.59",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
+    "eslint": "^8.23.1",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "prettier-eslint-cli": "^7.1.0",
+    "rollup": "^2.79.0",
+    "run-z": "^1.10.0",
+    "typescript": "^4.8.3"
+  },
+  "scripts": {
+    "all": "run-z build,lint,test",
+    "build": "run-z +z --then rollup -c",
+    "clean": "run-z +z --then clean-z",
+    "dev": "run-z +z build/--watch --and nodemon --signal SIGHUP ./dist/server.js",
+    "format": "run-z +z --then prettier-eslint --write --include-dot-files \"src/**/*.*\" \"*.{js,cjs,mjs,json,md}\"",
+    "lint": "run-z +z --then eslint .",
+    "start": "run-z +z build --then node ./dist/server.js",
+    "z": "run-z +cmd:rollup,+cmd:prettier-eslint"
+  }
+}
